@@ -1,11 +1,16 @@
 # docker-postgresql
 
-PostgreSQL Docker Image with the latest PostgreSQL 9.3 from apt.postgresql.org
+PostgreSQL Docker Image
+
+## Tags
+
+* `9.4` - PostgreSQL 9.4 from Ubuntu's Utopic repository
+* `9.3` - Latest PostgreSQL 9.3 from apt.postgresql.org (on Ubuntu Trusty)
 
 ## Usage
 
 1. Run this image, e.g.
-  `docker run -d -name postgresql zumbrunnen/postgresql`
+  `docker run -d -name postgresql zumbrunnen/postgresql:9.3`
 2. Connect to it via link or with `psql`:
 
 ```
