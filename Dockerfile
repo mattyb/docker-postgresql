@@ -1,25 +1,23 @@
 # PostgreSQL
 
-FROM zumbrunnen/base
+FROM ubuntu:trusty
 MAINTAINER David Zumbrunnen <zumbrunnen@gmail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get -qq update
-RUN apt-get -yqq upgrade
-RUN apt-get -yqq install wget ca-certificates
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main" > /etc/apt/sources.list.d/pgdg.list
-RUN wget --quiet --no-check-certificate -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
-RUN apt-get -qq update
-RUN apt-get -yqq install postgresql-9.3 \
-  && echo "CREATE USER docker WITH SUPERUSER PASSWORD 'docker';" | su postgres -c psql \
-  && su postgres -c "createdb -O docker docker"
+RUN apt-get update && apt-get install -y python-software-properties software-properties-common postgresql-9.3 postgresql-client-9.3 postgresql-contrib-9.3
 
-ADD supervisor.conf /etc/supervisor/conf.d/postgresql.conf
 ADD postgresql.conf /etc/postgresql/9.3/main/postgresql.conf
 ADD pg_hba.conf /etc/postgresql/9.3/main/pg_hba.conf
 
-VOLUME ["/var/lib/postgresql"]
+USER postgres
+RUN  /etc/init.d/postgresql start && \
+      psql --command "CREATE USER docker WITH SUPERUSER PASSWORD 'docker';" && \
+      createdb -O docker docker
+
+VOLUME ["/etc/postgresql", "/var/log/postgresql", "/var/lib/postgresql"]
 EXPOSE 5432
 
-CMD ["/usr/bin/supervisord"]
+CMD ["/usr/lib/postgresql/9.3/bin/postgres", "-D", "/var/lib/postgresql/9.3/main", "-c", "config_file=/etc/postgresql/9.3/main/postgresql.conf"]
