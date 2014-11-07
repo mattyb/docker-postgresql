@@ -11,7 +11,7 @@ PostgreSQL Docker Image
 ## Usage
 
 1. Run this image, e.g.
-  `docker run -d -name postgresql zumbrunnen/postgresql:9.3`
+  `docker run -d --name postgresql zumbrunnen/postgresql:9.4`
 2. Connect to it via link or with `psql`:
 
 ```
