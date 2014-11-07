@@ -4,6 +4,7 @@ PostgreSQL Docker Image
 
 ## Tags
 
+* `latest` - The repo's master branch - WIP :dragon_face:
 * `9.4` - PostgreSQL 9.4 from Ubuntu's Utopic repository
 * `9.3` - Latest PostgreSQL 9.3 from apt.postgresql.org (on Ubuntu Trusty)
 
