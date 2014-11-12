@@ -11,7 +11,8 @@ ADD postgresql.conf /etc/postgresql/9.4/main/postgresql.conf
 ADD pg_hba.conf /etc/postgresql/9.4/main/pg_hba.conf
 
 USER postgres
-RUN  /etc/init.d/postgresql start && \
+RUN  pg_dropcluster --stop 9.4 main && \
+      pg_createcluster --start -e UTF-8 9.4 main && \
       psql --command "CREATE USER docker WITH SUPERUSER PASSWORD 'docker';" && \
       createdb -O docker docker
 
