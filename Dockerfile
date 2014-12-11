@@ -5,7 +5,7 @@ MAINTAINER David Zumbrunnen <zumbrunnen@gmail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get update && apt-get install -y locales python-software-properties software-properties-common postgresql-common \
+RUN apt-get update && apt-get -y install locales python-software-properties software-properties-common postgresql-common \
       postgresql-9.4 postgresql-client-9.4 postgresql-contrib-9.4 \
       && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 
