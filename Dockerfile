@@ -5,13 +5,13 @@ MAINTAINER David Zumbrunnen <zumbrunnen@gmail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get update && apt-get install -y locales python-software-properties software-properties-common postgresql-common \
-      postgresql-9.4 postgresql-client-9.4 postgresql-contrib-9.4 \
-      && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
+RUN apt-get update && apt-get -y install language-pack-en python-software-properties \
+      software-properties-common postgresql-common postgresql-9.4 postgresql-client-9.4 \
+      postgresql-contrib-9.4 \
+    && rm -rf /var/lib/apt/lists/* \
+    && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 
 ENV LANG en_US.utf8
-
-
 
 USER postgres
 RUN  pg_dropcluster --stop 9.4 main && \
